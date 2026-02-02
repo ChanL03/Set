@@ -18,6 +18,8 @@ class Card(pygame.sprite.Sprite):
 def main():
     allSprites = pygame.sprite.Group()
     
+    tableOfCards = []
+
     row = [1,2,3] # esnures the correct spacing using LOC variables in cards
     #column = [1,2,3]
 
@@ -28,10 +30,12 @@ def main():
             count += 1
             tempCard = random.choice(deck)
             cardImage = pygame.image.load("deck/" + tempCard).convert_alpha()
+            tableOfCards.append(tempCard[:4])
             # cardImage = pygame.image.load("deck/p1fo.png").convert_alpha()
             card = Card(cardImage, row[i], count)
             allSprites.add(card)
             deck.remove(tempCard)
+    print(tableOfCards)
     clock = pygame.time.Clock()
     while True:
         window.fill(TABLE_RED)
