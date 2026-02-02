@@ -18,6 +18,9 @@ class Card(pygame.sprite.Sprite):
 def main():
     allSprites = pygame.sprite.Group()
     
+    score = 0
+    scoreText = font.render("Number of Sets: " + str(score), True, (255,255,255))
+
     tableOfCards = []
 
     row = [1,2,3] # esnures the correct spacing using LOC variables in cards
@@ -35,7 +38,7 @@ def main():
             card = Card(cardImage, row[i], count)
             allSprites.add(card)
             deck.remove(tempCard)
-    print(tableOfCards)
+    print(tableOfCards) # TEMPORARY USED TO CHECK THE CARDS
     clock = pygame.time.Clock()
     while True:
         window.fill(TABLE_RED)
@@ -45,6 +48,7 @@ def main():
                 pygame.quit()
                 sys.exit()
         allSprites.draw(window)
+        window.blit(scoreText, (10,10))
         pygame.display.update()
 
 if __name__ == "__main__":
