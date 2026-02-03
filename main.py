@@ -12,8 +12,10 @@ class Card(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         cardWidth = self.image.get_width()
         cardHeight = self.image.get_height()
-        self.rect.centerx = hSize//2 - cardWidth + (cardWidth/2) * row
-        self.rect.centery = vSize//2 - cardHeight + (cardHeight/2) * col
+        # self.rect.centerx = hSize//2 - cardWidth + (cardWidth/2) * row
+        # self.rect.centery = vSize//2 - cardHeight + (cardHeight/2) * col
+        self.rect.centerx = hSize//2 - 200 + 100 * row
+        self.rect.centery = vSize//2 - 200 + 100 * col
         self.value = tempCard[:4]
         # rowNum = row - 1
         # cardID = rowNum * 3 + col
