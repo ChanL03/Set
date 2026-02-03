@@ -5,15 +5,19 @@ from settings import *
 window = pygame.display.set_mode((hSize,vSize), 0, 24)
 
 class Card(pygame.sprite.Sprite):
-    def __init__(self,cardImg,loc,col):
+    def __init__(self,cardImg,col,row,tempCard):
         super().__init__()
         self.image = cardImg
         self.image = pygame.transform.scale_by(self.image, 2)
         self.rect = self.image.get_rect()
         cardWidth = self.image.get_width()
         cardHeight = self.image.get_height()
-        self.rect.centerx = hSize//2 - cardWidth + (cardWidth/2) * loc
+        self.rect.centerx = hSize//2 - cardWidth + (cardWidth/2) * row
         self.rect.centery = vSize//2 - cardHeight + (cardHeight/2) * col
+        self.value = tempCard[:4]
+        # rowNum = row - 1
+        # cardID = rowNum * 3 + col
+        # filled = False
 
 def main():
     allSprites = pygame.sprite.Group()
@@ -35,7 +39,7 @@ def main():
             cardImage = pygame.image.load("deck/" + tempCard).convert_alpha()
             tableOfCards.append(tempCard[:4])
             # cardImage = pygame.image.load("deck/p1fo.png").convert_alpha()
-            card = Card(cardImage, row[i], count)
+            card = Card(cardImage, row[i], count, tempCard)
             allSprites.add(card)
             deck.remove(tempCard)
     print(tableOfCards) # TEMPORARY USED TO CHECK THE CARDS
@@ -47,6 +51,14 @@ def main():
             if event.type == QUIT:
                 pygame.quit()
                 sys.exit()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                mousePosition = pygame.mouse.get_pos()
+                for card in allSprites:
+                    if card.rect.collidepoint(mousePosition):
+                        pressed = card.value
+                        print(pressed)
+                        break
+
         allSprites.draw(window)
         window.blit(scoreText, (10,10))
         pygame.display.update()
