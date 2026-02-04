@@ -26,6 +26,7 @@ def main():
     
     score = 0
     scoreText = font.render("Number of Sets: " + str(score), True, (255,255,255))
+    setText = font.render("Set!", True, (255,255,255))
 
     tableOfCards = []
 
@@ -45,6 +46,14 @@ def main():
             allSprites.add(card)
             deck.remove(tempCard)
     print(tableOfCards) # TEMPORARY USED TO CHECK THE CARDS
+    
+    color = False
+    number = False
+    density = False
+    shape = False
+
+    hand = []
+
     clock = pygame.time.Clock()
     while True:
         window.fill(TABLE_RED)
@@ -58,8 +67,25 @@ def main():
                 for card in allSprites:
                     if card.rect.collidepoint(mousePosition):
                         pressed = card.value
+                        hand.append(pressed)
                         print(pressed)
                         break
+            if len(hand) == 3:
+                for i in range(4):
+                    if hand[0][i-1] == hand[1][i-1] == hand[2][i-1] or hand[0][i-1] != hand[1][i-1] != hand[2][i-1]:
+                        if i == 1:
+                            color == True
+                        elif i == 2:
+                            number == True
+                        elif i == 3:
+                            density = True
+                        else:
+                            shape = True
+            if color == True and number == True and density == True and shape == True:
+                # currentTime = pygame.time.get_ticks()
+                window.blit(setText, (hSize/2, 50))
+                print("set")
+                hand = []
 
         allSprites.draw(window)
         window.blit(scoreText, (10,10))
