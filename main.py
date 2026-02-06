@@ -25,7 +25,6 @@ def main():
     allSprites = pygame.sprite.Group()
     
     score = 0
-    scoreText = font.render("Number of Sets: " + str(score), True, (255,255,255))
     setText = font.render("Set!", True, (255,255,255))
 
     tableOfCards = []
@@ -70,22 +69,30 @@ def main():
                         hand.append(pressed)
                         print(pressed)
                         break
-            if len(hand) == 3:
-                for i in range(4):
-                    if hand[0][i-1] == hand[1][i-1] == hand[2][i-1] or hand[0][i-1] != hand[1][i-1] != hand[2][i-1]:
-                        if i == 1:
-                            color == True
-                        elif i == 2:
-                            number == True
-                        elif i == 3:
-                            density = True
-                        else:
-                            shape = True
-            if color == True and number == True and density == True and shape == True:
-                # currentTime = pygame.time.get_ticks()
-                window.blit(setText, (hSize/2, 50))
-                print("set")
-                hand = []
+
+        if len(hand) == 3:
+            for i in range(4):
+                if (hand[0][i] == hand[1][i] == hand[2][i]) or (hand[0][i] != hand[1][i] != hand[2][i]):
+                    if i == 0:
+                        color = True
+                    elif i == 1:
+                        number = True
+                    elif i == 2:
+                        density = True
+                    elif i == 3:
+                        shape = True
+            print(color, number,density, shape)
+        if color == True and number == True and density == True and shape == True:
+            # currentTime = pygame.time.get_ticks()
+            window.blit(setText, (hSize/2, 50))
+            score += 1
+            color = False
+            number = False
+            density = False
+            shape = False
+            hand = []
+
+        scoreText = font.render("Number of Sets: " + str(score), True, (255,255,255))
 
         allSprites.draw(window)
         window.blit(scoreText, (10,10))
