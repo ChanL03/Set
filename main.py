@@ -46,10 +46,15 @@ def main():
             deck.remove(tempCard)
     print(tableOfCards) # TEMPORARY USED TO CHECK THE CARDS
     
+    #While Loop Variables
     color = False
     number = False
     density = False
     shape = False
+    setTextCheck = False
+    winTime = 0
+    duration = 1500
+
 
     hand = []
 
@@ -57,6 +62,8 @@ def main():
     while True:
         window.fill(TABLE_RED)
         clock.tick(60)
+        time = pygame.time.get_ticks()
+
         for event in pygame.event.get():
             if event.type == QUIT:
                 pygame.quit()
@@ -81,16 +88,24 @@ def main():
                         density = True
                     elif i == 3:
                         shape = True
-            print(color, number,density, shape)
+
         if color == True and number == True and density == True and shape == True:
             # currentTime = pygame.time.get_ticks()
-            window.blit(setText, (hSize/2, 50))
+            # window.blit(setText, (hSize/2, 50))
             score += 1
             color = False
             number = False
             density = False
             shape = False
+            setTextCheck = True
+            winTime = pygame.time.get_ticks()
             hand = []
+
+
+        if setTextCheck == True:
+            window.blit(setText, (hSize/2, 50))
+            if duration < time - winTime:
+                setTextCheck = False
 
         scoreText = font.render("Number of Sets: " + str(score), True, (255,255,255))
 
