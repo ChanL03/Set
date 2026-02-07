@@ -73,7 +73,8 @@ def main():
                 for card in allSprites:
                     if card.rect.collidepoint(mousePosition):
                         pressed = card.value
-                        hand.append(pressed)
+                        if pressed not in hand:
+                            hand.append(pressed)
                         print(pressed)
                         break
 
