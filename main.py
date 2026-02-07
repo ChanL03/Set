@@ -76,7 +76,7 @@ def main():
 
         if len(hand) == 3:
             for i in range(4):
-                if (hand[0].value[i] == hand[1].value[i] == hand[2].value[i]) or (hand[0].value[i] != hand[1].value[i] != hand[2].value[i]):
+                if (hand[0].value[i] == hand[1].value[i] == hand[2].value[i]) or ((hand[0].value[i] != hand[1].value[i]) and (hand[0].value[i] != hand[2].value[i]) and (hand[1].value[i] != hand[2].value[i])): #(hand[0].value[i] != hand[1].value[i] != hand[2].value[i]):
                     if i == 0:
                         color = True
                     elif i == 1:

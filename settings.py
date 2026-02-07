@@ -11,6 +11,6 @@ STARTY = 50
 CARDW = 28
 CARDH = 38
 
-font = pygame.font.SysFont(None, 40)
+font = pygame.font.SysFont(None, 45)
 
 CARDSPACING = 150
