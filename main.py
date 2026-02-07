@@ -72,15 +72,17 @@ def main():
                 mousePosition = pygame.mouse.get_pos()
                 for card in allSprites:
                     if card.rect.collidepoint(mousePosition):
-                        pressed = card.value
-                        if pressed not in hand:
-                            hand.append(pressed)
-                        print(pressed)
+                        # pressed = card.value
+                        # if pressed not in hand:
+                        #     hand.append(pressed)
+                        # print(pressed)
+                        if card not in hand:
+                            hand.append(card)
                         break
 
         if len(hand) == 3:
             for i in range(4):
-                if (hand[0][i] == hand[1][i] == hand[2][i]) or (hand[0][i] != hand[1][i] != hand[2][i]):
+                if (hand[0].value[i] == hand[1].value[i] == hand[2].value[i]) or (hand[0].value[i] != hand[1].value[i] != hand[2].value[i]):
                     if i == 0:
                         color = True
                     elif i == 1:
@@ -102,12 +104,13 @@ def main():
             density = False
             shape = False
             setTextCheck = True
-            card.kill()
             winTime = pygame.time.get_ticks()
             for i in hand:
                 if i in tableOfCards:
                     removed.append(tableOfCards.index(i))
                     tableOfCards.remove(i)
+            for card in hand:
+                card.kill()
             hand = []
 
         if setTextCheck == True:
@@ -121,12 +124,12 @@ def main():
                 cardImage = pygame.image.load("deck/" + tempCard).convert_alpha()
                 tableOfCards.insert(i,tempCard[:4])
                 # tableOfCards.append(tempCard[:4])
-                if i > 3:
-                    i = i%3
+                count = i%3
+                i = i//3
                 card = Card(cardImage, row[i], count, tempCard)
                 allSprites.add(card)
                 deck.remove(tempCard)
-                removed = []
+            removed.clear()
 
         scoreText = font.render("Number of Sets: " + str(score), True, (255,255,255))
 
