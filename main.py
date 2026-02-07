@@ -42,7 +42,7 @@ def main():
     score = 0
     setText = font.render("Set!", True, (255,255,255))
 
-    tableOfCards = []
+    # tableOfCards = []
 
     freeSlots = list(range(9))
 
@@ -57,7 +57,7 @@ def main():
     for i in range(len(freeSlots)):
             tempCard = random.choice(deck)
             cardImage = pygame.image.load("deck/" + tempCard).convert_alpha()
-            tableOfCards.append(tempCard[:4])
+            # tableOfCards.append(tempCard[:4])
             # cardImage = pygame.image.load("deck/p1fo.png").convert_alpha()
             # card = Card(cardImage, row[i], count, tempCard)
             slot = freeSlots[0]
@@ -65,7 +65,7 @@ def main():
             card = Card(cardImage, slot, tempCard)
             allSprites.add(card)
             deck.remove(tempCard)
-    print(tableOfCards) # TEMPORARY USED TO CHECK THE CARDS
+    # print(tableOfCards) # TEMPORARY USED TO CHECK THE CARDS
     
     #While Loop Variables
     color = False
@@ -145,7 +145,7 @@ def main():
             for i in range(len(freeSlots)):
                 tempCard = random.choice(deck)
                 cardImage = pygame.image.load("deck/" + tempCard).convert_alpha()
-                tableOfCards.insert(i,tempCard[:4])
+                # tableOfCards.insert(i,tempCard[:4])
                 # tableOfCards.append(tempCard[:4])
                 # count = i%3
                 # i = i//3
