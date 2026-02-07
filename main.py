@@ -30,10 +30,10 @@ class Card(pygame.sprite.Sprite):
         cardWidth = self.image.get_width()
         cardHeight = self.image.get_height()
         self.slot = slot
-        row = self.slot // 3 + 1
-        col = self.slot % 3 + 1
-        self.rect.centerx = hSize//2 - 200 + 100 * row
-        self.rect.centery = vSize//2 - 200 + 100 * col
+        row = self.slot // 3 
+        col = self.slot % 3
+        self.rect.centerx = hSize//2 - 100 + 100 * row
+        self.rect.centery = vSize//2 - 100 + 100 * col
         self.value = tempCard[:4]
 
 def main():
