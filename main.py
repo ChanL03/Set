@@ -13,9 +13,9 @@ class Card(pygame.sprite.Sprite):
         # cardWidth = self.image.get_width()
         # cardHeight = self.image.get_height()
         self.slot = slot
-        row = self.slot // 3 
-        col = self.slot % 3
-        self.rect.centerx = hSize//2 - CARDSPACING + CARDSPACING * row
+        col = self.slot % 3 
+        row = self.slot % 4
+        self.rect.centerx = hSize//2 - 1.5*CARDSPACING + CARDSPACING * row
         self.rect.centery = vSize//2 - CARDSPACING + CARDSPACING * col
         self.value = tempCard[:4]
         self.selected = False
@@ -26,7 +26,7 @@ def main():
     score = 0
     setText = font.render("Set!", True, (255,255,255))
 
-    freeSlots = list(range(9))
+    freeSlots = list(range(12))
 
     deck = os.listdir("/home/zeus/Projects/set/deck")
     for i in range(len(freeSlots)):
