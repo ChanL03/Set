@@ -4,37 +4,21 @@ from settings import *
 
 window = pygame.display.set_mode((hSize,vSize), 0, 24)
 
-# class Card(pygame.sprite.Sprite):
-#     def __init__(self,cardImg,col,row,tempCard):
-#         super().__init__()
-#         self.image = cardImg
-#         self.image = pygame.transform.scale_by(self.image, 2)
-#         self.rect = self.image.get_rect()
-#         cardWidth = self.image.get_width()
-#         cardHeight = self.image.get_height()
-#         # self.rect.centerx = hSize//2 - cardWidth + (cardWidth/2) * row
-#         # self.rect.centery = vSize//2 - cardHeight + (cardHeight/2) * col
-#         self.rect.centerx = hSize//2 - 200 + 100 * row
-#         self.rect.centery = vSize//2 - 200 + 100 * col
-#         self.value = tempCard[:4]
-#         # rowNum = row - 1
-#         # cardID = rowNum * 3 + col
-#         # filled = False
-
 class Card(pygame.sprite.Sprite):
     def __init__(self,cardImg,slot,tempCard):
         super().__init__()
         self.image = cardImg
         self.image = pygame.transform.scale_by(self.image, 2)
         self.rect = self.image.get_rect()
-        cardWidth = self.image.get_width()
-        cardHeight = self.image.get_height()
+        # cardWidth = self.image.get_width()
+        # cardHeight = self.image.get_height()
         self.slot = slot
         row = self.slot // 3 
         col = self.slot % 3
-        self.rect.centerx = hSize//2 - 100 + 100 * row
-        self.rect.centery = vSize//2 - 100 + 100 * col
+        self.rect.centerx = hSize//2 - CARDSPACING + CARDSPACING * row
+        self.rect.centery = vSize//2 - CARDSPACING + CARDSPACING * col
         self.value = tempCard[:4]
+        self.selected = False
 
 def main():
     allSprites = pygame.sprite.Group()
@@ -42,30 +26,17 @@ def main():
     score = 0
     setText = font.render("Set!", True, (255,255,255))
 
-    # tableOfCards = []
-
     freeSlots = list(range(9))
 
-    row = [1,2,3] # esnures the correct spacing using LOC variables in cards
-    #column = [1,2,3]
-
     deck = os.listdir("/home/zeus/Projects/set/deck")
-    # for i in range(len(row)):
-    #     count = 0
-    #     for j in range(3):
-    #         count += 1
     for i in range(len(freeSlots)):
             tempCard = random.choice(deck)
             cardImage = pygame.image.load("deck/" + tempCard).convert_alpha()
-            # tableOfCards.append(tempCard[:4])
-            # cardImage = pygame.image.load("deck/p1fo.png").convert_alpha()
-            # card = Card(cardImage, row[i], count, tempCard)
             slot = freeSlots[0]
             freeSlots.pop(0)
             card = Card(cardImage, slot, tempCard)
             allSprites.add(card)
             deck.remove(tempCard)
-    # print(tableOfCards) # TEMPORARY USED TO CHECK THE CARDS
     
     #While Loop Variables
     color = False
@@ -76,7 +47,6 @@ def main():
     winTime = 0
     duration = 1500
     
-    # removed = []
     hand = []
 
     clock = pygame.time.Clock()
@@ -93,14 +63,16 @@ def main():
                 mousePosition = pygame.mouse.get_pos()
                 for card in allSprites:
                     if card.rect.collidepoint(mousePosition):
-                        # pressed = card.value
-                        # if pressed not in hand:
-                        #     hand.append(pressed)
-                        # print(pressed)
                         if card not in hand:
                             hand.append(card)
+                            card.selected = True
                             print(card.value)
                         break
+        
+        for card in allSprites:
+            if card.selected:
+                outline = card.rect.inflate(10,10)
+                pygame.draw.rect(window,(0,0,0), outline, 0)
 
         if len(hand) == 3:
             for i in range(4):
@@ -115,11 +87,15 @@ def main():
                         shape = True
                 else:
                     hand = []
+                    color = False
+                    number = False
+                    density = False
+                    shape = False
+                    for card in allSprites:
+                        card.selected = False
                     break
 
         if color == True and number == True and density == True and shape == True:
-            # currentTime = pygame.time.get_ticks()
-            # window.blit(setText, (hSize/2, 50))
             score += 1
             color = False
             number = False
@@ -127,10 +103,6 @@ def main():
             shape = False
             setTextCheck = True
             winTime = pygame.time.get_ticks()
-            # for i in hand:
-            #     if i in tableOfCards:
-            #         removed.append(tableOfCards.index(i))
-            #         tableOfCards.remove(i)
             for card in hand:
                 card.kill()
                 freeSlots.append(card.slot)
@@ -145,17 +117,11 @@ def main():
             for i in range(len(freeSlots)):
                 tempCard = random.choice(deck)
                 cardImage = pygame.image.load("deck/" + tempCard).convert_alpha()
-                # tableOfCards.insert(i,tempCard[:4])
-                # tableOfCards.append(tempCard[:4])
-                # count = i%3
-                # i = i//3
-                # card = Card(cardImage, row[i], count, tempCard)
                 slot = freeSlots[0]
                 freeSlots.pop(0)
                 card = Card(cardImage, slot, tempCard)
                 allSprites.add(card)
                 deck.remove(tempCard)
-            # removed.clear()
 
         scoreText = font.render("Number of Sets: " + str(score), True, (255,255,255))
 
