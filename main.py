@@ -76,7 +76,7 @@ def main():
     winTime = 0
     duration = 1500
     
-    removed = []
+    # removed = []
     hand = []
 
     clock = pygame.time.Clock()
@@ -155,7 +155,7 @@ def main():
                 card = Card(cardImage, slot, tempCard)
                 allSprites.add(card)
                 deck.remove(tempCard)
-            removed.clear()
+            # removed.clear()
 
         scoreText = font.render("Number of Sets: " + str(score), True, (255,255,255))
 
