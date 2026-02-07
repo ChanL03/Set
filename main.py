@@ -54,8 +54,8 @@ def main():
     setTextCheck = False
     winTime = 0
     duration = 1500
-
-
+    
+    removed = []
     hand = []
 
     clock = pygame.time.Clock()
@@ -88,6 +88,9 @@ def main():
                         density = True
                     elif i == 3:
                         shape = True
+                else:
+                    hand = []
+                    break
 
         if color == True and number == True and density == True and shape == True:
             # currentTime = pygame.time.get_ticks()
@@ -98,14 +101,31 @@ def main():
             density = False
             shape = False
             setTextCheck = True
+            card.kill()
             winTime = pygame.time.get_ticks()
+            for i in hand:
+                if i in tableOfCards:
+                    removed.append(tableOfCards.index(i))
+                    tableOfCards.remove(i)
             hand = []
-
 
         if setTextCheck == True:
             window.blit(setText, (hSize/2, 50))
             if duration < time - winTime:
                 setTextCheck = False
+        
+        if len(tableOfCards) < 9:
+            for i in removed:
+                tempCard = random.choice(deck)
+                cardImage = pygame.image.load("deck/" + tempCard).convert_alpha()
+                tableOfCards.insert(i,tempCard[:4])
+                # tableOfCards.append(tempCard[:4])
+                if i > 3:
+                    i = i%3
+                card = Card(cardImage, row[i], count, tempCard)
+                allSprites.add(card)
+                deck.remove(tempCard)
+                removed = []
 
         scoreText = font.render("Number of Sets: " + str(score), True, (255,255,255))
 
