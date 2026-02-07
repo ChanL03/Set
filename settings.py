@@ -13,4 +13,4 @@ CARDH = 38
 
 font = pygame.font.SysFont(None, 40)
 
-CARDSPACING = 100
+CARDSPACING = 150

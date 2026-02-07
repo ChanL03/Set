@@ -8,7 +8,7 @@ class Card(pygame.sprite.Sprite):
     def __init__(self,cardImg,slot,tempCard):
         super().__init__()
         self.image = cardImg
-        self.image = pygame.transform.scale_by(self.image, 2)
+        self.image = pygame.transform.scale_by(self.image, 3)
         self.rect = self.image.get_rect()
         # cardWidth = self.image.get_width()
         # cardHeight = self.image.get_height()
