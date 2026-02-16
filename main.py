@@ -10,8 +10,6 @@ class Card(pygame.sprite.Sprite):
         self.image = cardImg
         self.image = pygame.transform.scale_by(self.image, 3)
         self.rect = self.image.get_rect()
-        # cardWidth = self.image.get_width()
-        # cardHeight = self.image.get_height()
         self.slot = slot
         if slot <= 12:
             col = self.slot % 3 
@@ -163,8 +161,6 @@ def main():
         if addThree == True:
             buttonTime = pygame.time.get_ticks()
             addThree = False
-            missing = 3 - len(allSprites)%3
-            print(missing)
             if len(allSprites) <= 12:
                 freeSlots = freeSlots + [13, 14, 15]
                 addThree = False
