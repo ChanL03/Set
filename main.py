@@ -170,7 +170,6 @@ def main():
         for card in allSprites:
             if card.slot > largest:
                 largest = card.slot
-                print(largest)
         if addThree == True:
             buttonTime = pygame.time.get_ticks()
             addThree = False
