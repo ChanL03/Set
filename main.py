@@ -97,6 +97,11 @@ def main():
                 for button in buttons:
                     if button.rect.collidepoint(mousePosition):
                         addThree = True
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    for card in allSprites:
+                        card.selected = False
+                    hand = []
 
         
         for card in allSprites:
