@@ -147,7 +147,7 @@ def main():
                 setTextCheck = False
 
         if cantAddCheck == True:
-            window.blit(cantAdd, (hSize/2 - 175, 75))
+            window.blit(cantAdd, (hSize/2 - 175, vSize - 100))
             if duration < time - buttonTime:
                 cantAddCheck = False
         
@@ -163,10 +163,14 @@ def main():
         if addThree == True:
             buttonTime = pygame.time.get_ticks()
             addThree = False
-            if len(allSprites) < 18:
-                freeSlots = freeSlots + [len(allSprites) + 1, len(allSprites) + 2, len(allSprites) + 3]
+            missing = 3 - len(allSprites)%3
+            print(missing)
+            if len(allSprites) <= 12:
+                freeSlots = freeSlots + [13, 14, 15]
                 addThree = False
-            elif len(allSprites) >= 18:
+            elif len(allSprites) <= 15:
+                freeSlots = freeSlots + [16, 17, 18]
+            elif len(allSprites) > 15:
                 cantAddCheck = True
 
         scoreText = font.render("Number of Sets: " + str(score), True, (255,255,255))
