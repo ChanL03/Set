@@ -13,20 +13,46 @@ class Card(pygame.sprite.Sprite):
         # cardWidth = self.image.get_width()
         # cardHeight = self.image.get_height()
         self.slot = slot
-        col = self.slot % 3 
-        row = self.slot % 4
-        self.rect.centerx = hSize//2 - 1.5*CARDSPACING + CARDSPACING * row
-        self.rect.centery = vSize//2 - CARDSPACING + CARDSPACING * col
+        if slot <= 12:
+            col = self.slot % 3 
+            row = self.slot % 4
+            self.rect.centerx = hSize//2 - 1.5*CARDSPACING + CARDSPACING * row
+            self.rect.centery = vSize//2 - CARDSPACING + CARDSPACING * col
+        elif slot <= 15:
+            slot = slot - 12
+            self.rect.centerx =  hSize//2 - 1.5*CARDSPACING + CARDSPACING * 4
+            self.rect.centery = vSize//2 - CARDSPACING + CARDSPACING * (slot - 1)
+        elif slot <= 18:
+            slot = slot - 15
+            self.rect.centerx =  hSize//2 - 1.5*CARDSPACING + CARDSPACING * -1
+            self.rect.centery = vSize//2 - CARDSPACING + CARDSPACING * (slot - 1)
+
+
         self.value = tempCard[:4]
         self.selected = False
 
+class Add(pygame.sprite.Sprite):
+    def __init__(self,addImg):
+        super().__init__()
+        self.image = addImg
+        self.image = pygame.transform.scale_by(self.image, 3)
+        self.rect = self.image.get_rect()
+        self.rect.topright = (hSize - 10, 10 )
+
 def main():
     allSprites = pygame.sprite.Group()
+    buttons = pygame.sprite.Group()
     
     score = 0
     setText = font.render("Set!", True, (255,255,255))
 
+    cantAdd = font.render("Cannot Add More Cards", True, (255,255,255))
+
     freeSlots = list(range(12))
+
+    addImage = pygame.image.load("addCard.png").convert_alpha()
+    addCard = Add(addImage)
+    buttons.add(addCard)
 
     deck = os.listdir("/home/zeus/Projects/set/deck")
     for i in range(len(freeSlots)):
@@ -44,6 +70,8 @@ def main():
     density = False
     shape = False
     setTextCheck = False
+    cantAddCheck =  False
+    addThree = False
     winTime = 0
     duration = 1500
     
@@ -68,6 +96,10 @@ def main():
                             card.selected = True
                             print(card.value)
                         break
+                for button in buttons:
+                    if button.rect.collidepoint(mousePosition):
+                        addThree = True
+
         
         for card in allSprites:
             if card.selected:
@@ -105,13 +137,19 @@ def main():
             winTime = pygame.time.get_ticks()
             for card in hand:
                 card.kill()
-                freeSlots.append(card.slot)
+                if card.slot < 12:
+                    freeSlots.append(card.slot)
             hand.clear()
 
         if setTextCheck == True:
-            window.blit(setText, (hSize/2, 50))
+            window.blit(setText, (hSize/2 - 10, 75))
             if duration < time - winTime:
                 setTextCheck = False
+
+        if cantAddCheck == True:
+            window.blit(cantAdd, (hSize/2 - 175, 75))
+            if duration < time - buttonTime:
+                cantAddCheck = False
         
         if len(freeSlots) > 0:
             for i in range(len(freeSlots)):
@@ -122,10 +160,19 @@ def main():
                 card = Card(cardImage, slot, tempCard)
                 allSprites.add(card)
                 deck.remove(tempCard)
+        if addThree == True:
+            buttonTime = pygame.time.get_ticks()
+            addThree = False
+            if len(allSprites) < 18:
+                freeSlots = freeSlots + [len(allSprites) + 1, len(allSprites) + 2, len(allSprites) + 3]
+                addThree = False
+            elif len(allSprites) >= 18:
+                cantAddCheck = True
 
         scoreText = font.render("Number of Sets: " + str(score), True, (255,255,255))
 
         allSprites.draw(window)
+        buttons.draw(window)
         window.blit(scoreText, (10,10))
         pygame.display.update()
 
