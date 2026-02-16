@@ -70,6 +70,9 @@ def main():
     setTextCheck = False
     cantAddCheck =  False
     addThree = False
+    largest = 0
+    rightCount = 0
+    leftCount = 0
     winTime = 0
     duration = 1500
     
@@ -143,6 +146,7 @@ def main():
                 if card.slot < 12:
                     freeSlots.append(card.slot)
             hand.clear()
+            largest = 0
 
         if setTextCheck == True:
             window.blit(setText, (hSize/2 - 10, 75))
@@ -163,15 +167,37 @@ def main():
                 card = Card(cardImage, slot, tempCard)
                 allSprites.add(card)
                 deck.remove(tempCard)
+        for card in allSprites:
+            if card.slot > largest:
+                largest = card.slot
+                print(largest)
         if addThree == True:
             buttonTime = pygame.time.get_ticks()
             addThree = False
-            if len(allSprites) <= 12:
+            rightCount = 0
+            leftCount = 0
+            for card in allSprites:
+                if card.slot == 13:
+                    rightCount += 1
+                elif card.slot == 14:
+                    rightCount += 1
+                elif card.slot == 15:
+                    rightCount += 1
+                elif card.slot == 16:
+                    leftCount +=1
+                elif card.slot == 17:
+                    leftCount +=1
+                elif card.slot == 18:
+                    leftCount +=1
+
+            # if len(allSprites) <= 12:
+            if rightCount == 0:
                 freeSlots = freeSlots + [13, 14, 15]
-                addThree = False
-            elif len(allSprites) <= 15:
+            # elif len(allSprites) <= 15 and largest < 16:
+            elif leftCount == 0:
                 freeSlots = freeSlots + [16, 17, 18]
-            elif len(allSprites) > 15:
+            # elif len(allSprites) > 15:
+            elif rightCount > 0 and leftCount > 0:
                 cantAddCheck = True
 
         scoreText = font.render("Sets: " + str(score), True, (255,255,255))
