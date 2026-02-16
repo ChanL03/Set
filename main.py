@@ -114,7 +114,7 @@ def main():
 
         if len(hand) == 3:
             for i in range(4):
-                if (hand[0].value[i] == hand[1].value[i] == hand[2].value[i]) or ((hand[0].value[i] != hand[1].value[i]) and (hand[0].value[i] != hand[2].value[i]) and (hand[1].value[i] != hand[2].value[i])): #(hand[0].value[i] != hand[1].value[i] != hand[2].value[i]):
+                if (hand[0].value[i] == hand[1].value[i] == hand[2].value[i]) or ((hand[0].value[i] != hand[1].value[i]) and (hand[0].value[i] != hand[2].value[i]) and (hand[1].value[i] != hand[2].value[i])):
                     if i == 0:
                         color = True
                     elif i == 1:
@@ -190,13 +190,10 @@ def main():
                 elif card.slot == 18:
                     leftCount +=1
 
-            # if len(allSprites) <= 12:
             if rightCount == 0:
                 freeSlots = freeSlots + [13, 14, 15]
-            # elif len(allSprites) <= 15 and largest < 16:
             elif leftCount == 0:
                 freeSlots = freeSlots + [16, 17, 18]
-            # elif len(allSprites) > 15:
             elif rightCount > 0 and leftCount > 0:
                 cantAddCheck = True
 
