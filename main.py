@@ -173,11 +173,15 @@ def main():
             elif len(allSprites) > 15:
                 cantAddCheck = True
 
-        scoreText = font.render("Number of Sets: " + str(score), True, (255,255,255))
+        scoreText = font.render("Sets: " + str(score), True, (255,255,255))
+
+        cardsLeft = len(deck)
+        leftText = font.render("Cards Remaining: " + str(cardsLeft), True, (255,255,255)) 
 
         allSprites.draw(window)
         buttons.draw(window)
-        window.blit(scoreText, (10,10))
+        window.blit(scoreText, (10,50))
+        window.blit(leftText, (10, 10))
         pygame.display.update()
 
 if __name__ == "__main__":
