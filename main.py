@@ -52,7 +52,8 @@ def main():
     addCard = Add(addImage)
     buttons.add(addCard)
 
-    deck = os.listdir("/home/zeus/Projects/set/deck")
+    # deck = os.listdir("/home/zeus/Projects/set/deck")
+    deck = os.listdir("deck")
     for i in range(len(freeSlots)):
             tempCard = random.choice(deck)
             cardImage = pygame.image.load("deck/" + tempCard).convert_alpha()
